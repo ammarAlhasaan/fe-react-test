@@ -1,0 +1,42 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: $spacing-md;
+}
+
+.label {
+  font-size: $font-size-sm;
+  color: $dark-color;
+  margin-bottom: $spacing-sm;
+}
+
+.input {
+  padding: $spacing-sm;
+  font-size: $font-size-base;
+  border: 1px solid $light-color;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+
+  &:focus {
+    border-color: $primary-color;
+  }
+
+  &:disabled {
+    background-color: $light-color;
+    cursor: not-allowed;
+  }
+}
+
+.inputError {
+  border-color: $error-color;
+}
+
+.errorText {
+  color: $error-color;
+  font-size: $font-size-sm;
+  margin-top: $spacing-sm;
+}
