@@ -1,7 +1,12 @@
-export default interface Employee {
-  staffId: string;
-  name: string;
-  joiningDate: Date;
-  basicSalary: number;
-  salaryAllowances: number;
+export default interface ISalary {
+  id: string;
+  employeeId?: string;
+  employeeName?: string;
+  salaryDate: Date;
+  additions?: number;
+  deductions?: number;
+  note?: string;
+  basicSalary?: number;
+  salaryAllowances?: number;
+  total?: number;
 }

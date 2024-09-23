@@ -1,0 +1,49 @@
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid var(--border-default); // Use themed border color
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: var(--background-base-default); // Use themed background color
+}
+
+.listHeader {
+  display: flex;
+  background-color: var(--background-default-default); // Use themed background color for header
+  padding: 10px;
+  font-weight: bold;
+  border-bottom: 1px solid var(--border-default); // Use themed border color
+}
+
+.listHeaderItem {
+  flex: 1;
+  padding: 5px 10px;
+  text-align: left;
+  color: var(--text-default); // Use themed text color
+}
+
+.listBody {
+  display: flex;
+  flex-direction: column;
+}
+
+.listRow {
+  display: flex;
+  border-bottom: 1px solid var(--border-default); // Use themed border color
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--background-default-hovered); // Use themed background color for hover state
+  }
+}
+
+.listItem {
+  flex: 1;
+  padding: 10px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-default); // Use themed text color
+}

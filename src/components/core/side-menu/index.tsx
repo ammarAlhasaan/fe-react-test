@@ -1,19 +1,40 @@
-import {Link} from "react-router-dom";
+import React, {useState} from 'react';
+import styles from './SideMenu.module.scss';
+import MenuItem from './menu-item';
 
-export default function Sidebar() {
+interface MenuItemProps {
+  label: string;
+  icon?: React.ReactNode;
+  path?: string;
+  children?: MenuItemProps[];
+}
+
+interface SideMenuProps {
+  menuItems: MenuItemProps[];
+  collapsed?: boolean;
+  onChange?: (isCollapsed: boolean) => void;
+}
+
+const SideMenu: React.FC<SideMenuProps> = ({menuItems, collapsed = false, onChange}) => {
+  const [isCollapsed, setIsCollapsed] = useState(collapsed);
+
+  const handleToggle = () => {
+    setIsCollapsed(!isCollapsed);
+    onChange?.(!isCollapsed);
+  };
+
   return (
-    <div id="sidebar">
-      <nav>
-        <ul>
-
-          <li>
-            <Link to="employee/list">Employees</Link>
-          </li>
-          <li>
-            <Link to="salary/list">Salaries</Link>
-          </li>
-        </ul>
-      </nav>
+    <div className={`${styles.sideMenu} ${isCollapsed ? styles.collapsed : ''}`}>
+      <button className={styles.toggleButton} onClick={handleToggle}>
+        {isCollapsed ? '→' : '←'}
+      </button>
+      <ul className={styles.menuList}>
+        {menuItems.map((item, index) => (
+          <MenuItem key={index} item={item} isCollapsed={isCollapsed}/>
+        ))}
+      </ul>
     </div>
   );
-}
+};
+
+export default SideMenu;

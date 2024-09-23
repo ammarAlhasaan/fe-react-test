@@ -1,37 +1,38 @@
 import {Button, List, Modal, Row} from "components/core";
 import React, {useEffect, useState} from "react";
 import {useNavigate, useRevalidator} from "react-router-dom";
-import {deleteEmployee} from "api";
 import {TableActions} from "components/common";
+import {deleteSalary} from "api";
 
 const headers = [
-  {key: 'staffId', label: 'Staff ID'},
-  {key: 'name', label: 'Name'},
-  {key: 'joiningDate', label: 'Joining Date'},
-  {key: 'basicSalary', label: 'Basic Salary'},
-  {key: 'salaryAllowances', label: 'Salary Allowances'},
-  {key: 'action', label: ''}, // Optional action column
+  {key: 'employeeName', label: 'Name'},
+  {key: 'basicSalary', label: 'Basic'},
+  {key: 'salaryAllowances', label: 'Allowances'},
+  {key: 'salaryDate', label: 'Date'},
+  {key: 'additions', label: 'Additions'},
+  {key: 'deductions', label: 'Deductions'},
+  {key: 'total', label: 'Total'},
+  {key: 'action', label: ''}
 ];
 
 
-export default function Content({employees}: any) {
 
-  const revalidator = useRevalidator();
+export default function Content({salaries}: any) {
   const navigate = useNavigate();
-
+  const revalidator = useRevalidator();
 
   const [data, setData] = useState<any[]>([])
   const [isOpen, setIsOpen] = useState(false)
-  const [selectedEmployee, setSelectedEmployee] = useState<any>(undefined);
+  const [selectedSalary, setSelectedSalary] = useState<any>(undefined);
 
 
   useEffect(() => {
-    setData(formattedData(employees))
-  }, [employees]);
+    setData(formattedData(salaries))
+  }, [salaries]);
 
-  const handleDeleteEmployee = async (id: number | string) => {
+  const handleDeleteSalary = async (id: number | string) => {
     try {
-      await deleteEmployee(id);
+      await deleteSalary(id);
       setData(data.filter(emp => emp.id !== id));
       revalidator.revalidate(); // Trigger revalidation to fetch the latest data
     } catch (err) {
@@ -40,22 +41,22 @@ export default function Content({employees}: any) {
     }
   };
 
-  const formattedData = (employees: any[]): any[] => {
-    return employees.map(employee => {
+  const formattedData = (salaries: any[]): any[] => {
+    return salaries?.map(salary => {
       return {
-        ...employee, action: {
+        ...salary, action: {
           renderCol: () => <TableActions
             onInfoClick={() => {
-              navigate(`${employee.staffId}`, {state: {data: employee}})
-              setSelectedEmployee(employee);
+              navigate(`${salary.id}`, {state: {data: salary}})
+              setSelectedSalary(salary);
             }}
             onUpdateClick={() => {
-              navigate(`${employee.staffId}/update`, {state: {data: employee}})
-              setSelectedEmployee(employee);
+              navigate(`${salary.id}/update`, {state: {data: salary}})
+              setSelectedSalary(salary);
             }}
             onDeleteClick={() => {
               setIsOpen(true)
-              setSelectedEmployee(employee);
+              setSelectedSalary(salary);
             }}/>,
         }
       }
@@ -69,7 +70,7 @@ export default function Content({employees}: any) {
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <p>Are you sure you want to delete this item? This action cannot be undone.</p>
         <Row gap="1rem" justifyContent="end">
-          <Button variant="error" onClick={() => handleDeleteEmployee(selectedEmployee.id)}>
+          <Button variant="error" onClick={() => handleDeleteSalary(selectedSalary.id)}>
             Delete
           </Button>
           <Button variant="default"

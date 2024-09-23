@@ -1,6 +1,6 @@
 import React from 'react';
 import {FieldProps} from 'formik';
-import Input, {InputProps} from "../../core/input";
+import Input, {InputProps} from "components/core/input";
 
 
 interface InputFieldProps extends Omit<InputProps, 'form'>, FieldProps {

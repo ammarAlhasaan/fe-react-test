@@ -1,0 +1,26 @@
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  line-height: 1.5;
+  color: $dark-color;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  margin-bottom: $spacing-sm;
+}
+
+h1 {
+  @include responsive-font(2rem);
+}
+
+h2 {
+  @include responsive-font(1.75rem);
+}
+
+h3 {
+  @include responsive-font(1.5rem);
+}
+
+// Other typography styles...

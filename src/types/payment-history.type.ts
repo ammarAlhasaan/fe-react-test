@@ -1,12 +1,7 @@
-export default interface ISalary {
-  id?: string;
-  employeeId?: string;
-  employeeName?: string;
-  salaryDate: Date;
-  additions?: number;
-  deductions?: number;
-  note?: string;
-  basicSalary?: number;
-  salaryAllowances?: number;
-  total?: number;
+import ISalary from "types/salary.type";
+
+export default interface IPaymentHistory extends ISalary {
+  id: string;
+  salaryId: string;
+  createdAt: Date;
 }

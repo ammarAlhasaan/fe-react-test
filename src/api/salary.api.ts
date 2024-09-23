@@ -1,32 +1,27 @@
-import IEmployee from "types/employee.type";
+import ISalary from "types/salary.type";
 import api from "./api";
 
 
-// Get all employees
-export const getEmployees = async (): Promise<IEmployee[]> => {
-  const response = await api.get('/employees');
+export const getSalaries = async (): Promise<ISalary[]> => {
+  const response = await api.get('/salaries');
   return response.data;
 };
 
-// Get a single employee by ID
-export const getEmployeeById = async (id: number | string): Promise<IEmployee> => {
-  const response = await api.get(`/employees/${id}`);
+export const getSalaryById = async (id: number | string): Promise<ISalary> => {
+  const response = await api.get(`/salaries/${id}`);
   return response.data;
 };
 
-// Create a new employee
-export const createEmployee = async <T extends IEmployee>(employee: T): Promise<T> => {
-  const response = await api.post('/employees', employee);
+export const createSalary = async <T extends ISalary>(salary: T): Promise<T> => {
+  const response = await api.post('/salaries', salary);
   return response.data;
 };
 
-// Update an existing employee
-export const updateEmployee = async <T extends IEmployee>(employee: T): Promise<T> => {
-  const response = await api.put(`/employees/${employee.id}`, employee);
+export const updateSalary = async <T extends ISalary>(salary: T): Promise<T> => {
+  const response = await api.put(`/salaries/${salary.id}`, salary);
   return response.data;
 };
 
-// Delete an employee
-export const deleteEmployee = async (id: number | string): Promise<void> => {
-  await api.delete(`/employees/${id}`);
+export const deleteSalary = async (id: number | string): Promise<void> => {
+  await api.delete(`/salaries/${id}`);
 };

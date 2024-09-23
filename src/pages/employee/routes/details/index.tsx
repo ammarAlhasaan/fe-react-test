@@ -1,33 +1,25 @@
-import {useLocation, useParams} from "react-router-dom";
-import {EmployeeForm, EmployeeValidationSchema, EmployeeFormValues} from "../employee-shared";
-import {Formik, FormikHelpers} from "formik";
-import {DialogRoute} from "../../../components/common";
+import {useLoaderData} from "react-router-dom";
+import {Formik} from "formik";
+import {DialogRoute} from "components/common";
+import {EmployeeForm, EmployeeFormValues, EmployeeValidationSchema} from "pages/employee/shared";
 
 export default function EmployeeDetails() {
-
-  const location = useLocation();
-  const {data} = location.state as { data: EmployeeFormValues } || {};
-  const {id} = useParams<"id">();
+  const {employee} = useLoaderData() as { employee: Partial<EmployeeFormValues> };
 
   return (
     <>
-      <DialogRoute>
-        <h1>Employee Details {id}</h1>
+      <DialogRoute
+        title="Employee Details"
+      >
         <Formik
-          initialValues={data}
+          initialValues={employee}
           validationSchema={EmployeeValidationSchema}
-          onSubmit={(
-            values: EmployeeFormValues,
-            {setSubmitting}: FormikHelpers<EmployeeFormValues>
-          ) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              setSubmitting(false);
-            }, 500);
+          onSubmit={() => {
+            return;
           }}
         >
           {(formikProps) => (
-            <EmployeeForm formikProps={formikProps}/>
+            <EmployeeForm formikProps={formikProps} readOnly={true}/>
           )}
         </Formik>
       </DialogRoute>

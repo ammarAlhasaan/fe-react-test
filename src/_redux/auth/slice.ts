@@ -10,7 +10,6 @@ export interface IAuthState {
   success: boolean;
 }
 
-// Initial state definition
 const initialState: IAuthState = {
   loading: false,
   userInfo: undefined,
@@ -34,13 +33,22 @@ const authReducer = createReducer(initialState, (builder) => {
       state.loading = false;
       state.error = payload as string;
     });
-
   builder
-    .addCase(login, (state, action) => {
-      state.loading = false;
+    .addCase(login.pending, (state) => {
+      state.loading = true;
       state.error = null;
-      state.userInfo = action.payload.userInfo;
-      state.userToken = action.payload.userToken;
+    })
+    .addCase(login.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.success = true;
+      state.userInfo = payload.user as IUser;
+      state.userToken = payload.token;
+
+      localStorage.setItem('token', payload.token);
+    })
+    .addCase(login.rejected, (state, { payload }) => {
+      state.loading = false;
+      state.error = payload as string;
     })
     .addCase(logout, (state) => {
       state.loading = false;
@@ -48,6 +56,7 @@ const authReducer = createReducer(initialState, (builder) => {
       state.userToken = '';
       state.error = null;
       state.success = false;
+      localStorage.removeItem('token');
     });
 });
 

@@ -1,8 +1,9 @@
-import {IEmployee} from "../../../types";
+import ISalary from "types/salary.type";
 
-interface EmployeeFormValues extends IEmployee {
+interface SalaryFormValues extends ISalary {
+
 }
 
 export type {
-  EmployeeFormValues
+  SalaryFormValues
 }

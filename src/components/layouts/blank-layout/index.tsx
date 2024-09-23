@@ -1,11 +1,9 @@
 import {Outlet} from "react-router-dom";
 
-export default function Blank() {
+export default function BlankLayout() {
   return (
-    <>
-      <div id="page">
-        <Outlet />
-      </div>
-    </>
+    <div id="page">
+      <Outlet/>
+    </div>
   );
 }

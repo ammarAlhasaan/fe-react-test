@@ -1,45 +1,42 @@
-import { Field, Form, Formik, FormikHelpers } from 'formik';
-import { FormContainer, InputField } from 'components/common/formik'; // Adjust the import paths as necessary
-import React from 'react';
-import { Button, Row } from 'components/core'; // Adjust the import paths as necessary
-import { useDispatch } from 'react-redux';
+import {Field, Form, Formik} from 'formik';
+import {FormContainer, InputField} from 'components/common/formik'; // Adjust the import paths as necessary
+import React, {useState} from 'react';
+import {Button, Row} from 'components/core'; // Adjust the import paths as necessary
+import {useDispatch} from 'react-redux';
 import * as Yup from 'yup';
-import {login} from "redux/auth/action"; // Yup for form validation
+import {registerUser} from "_redux/auth";
+import IUser from "types/user.type";
+import {useNavigate} from "react-router-dom";
 
-// Define the types for the form values
-interface LoginFormValues {
-  email: string;
-  password: string;
-}
 
-// Initial values for the login form
-const initialValues: LoginFormValues = {
+export type RegisterFormValues = Omit<IUser, 'id'>;
+
+const initialValues: RegisterFormValues = {
+  name: '',
   email: '',
   password: '',
 };
 
-// Validation schema using Yup
 const validationSchema = Yup.object({
   email: Yup.string().required('Username is required'),
   password: Yup.string().required('Password is required'),
 });
 
-const LoginScreen: React.FC = () => {
+const Register: React.FC = () => {
   const dispatch = useDispatch();
-
-  // Handle form submission
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false)
   const handleSubmit = async (
-    values: LoginFormValues,
-    { setSubmitting }: FormikHelpers<LoginFormValues>
+    values: RegisterFormValues,
   ) => {
+    setLoading(true)
     try {
-      // Dispatch the login action with the user credentials
-      dispatch(login({ userInfo: { email: values.email }, userToken: 'fakeToken' })); // Replace 'fakeToken' with actual token
-      console.log('Login successful', values);
+      dispatch(registerUser(values));
+      navigate('/auth/login')
     } catch (error) {
       console.error('Login failed', error);
     } finally {
-      setSubmitting(false);
+      setLoading(false)
     }
   };
 
@@ -49,12 +46,19 @@ const LoginScreen: React.FC = () => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({ handleSubmit, isSubmitting }) => (
+      {({handleSubmit}) => (
         <Form onSubmit={handleSubmit}>
           <FormContainer>
             <Field
-              name="username"
-              label="Username"
+              name="name"
+              label="Name"
+              placeholder="Enter your username"
+              component={InputField}
+            />
+            <Field
+              name="email"
+              label="Email"
+              type="email"
               placeholder="Enter your username"
               component={InputField}
             />
@@ -66,8 +70,11 @@ const LoginScreen: React.FC = () => {
               component={InputField}
             />
             <Row gap="1rem" justifyContent="end">
-              <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? 'Logging in...' : 'Login'}
+              <Button kind="text" type="submit" onClick={() => navigate('/auth/login')}>
+                Login
+              </Button>
+              <Button type="submit" isLoading={loading}>
+                Create account
               </Button>
             </Row>
           </FormContainer>
@@ -77,4 +84,4 @@ const LoginScreen: React.FC = () => {
   );
 };
 
-export default LoginScreen;
+export default Register;

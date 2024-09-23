@@ -1,8 +1,5 @@
-import {Button, List, Modal, Row} from "components/core";
-import React, {useEffect, useState} from "react";
-import {useNavigate, useRevalidator} from "react-router-dom";
-import {TableActions} from "components/common";
-import {deleteSalary} from "api/salary.api";
+import {List} from "components/core";
+import React from "react";
 
 const headers = [
   {key: 'employeeName', label: 'Name'},
@@ -14,8 +11,6 @@ const headers = [
   {key: 'total', label: 'Total'},
   {key: 'createdAt', label: 'Created'}
 ];
-
-
 
 export default function Content({paymentHistory}: any) {
 

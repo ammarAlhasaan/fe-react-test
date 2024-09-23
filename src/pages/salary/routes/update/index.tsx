@@ -1,40 +1,35 @@
-import {EmployeeForm, EmployeeFormValues, EmployeeValidationSchema} from "../../shared";
+import {useLoaderData, useNavigate} from "react-router-dom";
 import {Formik, FormikHelpers} from "formik";
 import {DialogRoute} from "components/common";
-import {updateEmployee} from "api/employee.api";
-import {useLocation, useNavigate, useRevalidator} from "react-router-dom";
+import {updateSalary} from "api";
+import {SalaryForm, SalaryValidationSchema} from "pages/salary/shared";
+import IEmployee from "types/employee.type";
+import ISalary from "types/salary.type";
 
-export default function UpdateEmployee() {
-  const location = useLocation();
+export default function SalaryEmployee() {
   const navigate = useNavigate();
-  const {data} = location.state as { data: Partial<EmployeeFormValues> } || {};
-  const revalidator = useRevalidator();
-
+  const {salary, employees} = useLoaderData() as { salary: Partial<ISalary>, employees: IEmployee[] };
   return (
     <>
-      <DialogRoute
-        title="Add New Employee"
-      >
+      <DialogRoute title="Add New Salary">
         <Formik
-          initialValues={data}
-          validationSchema={EmployeeValidationSchema}
+          initialValues={salary}
+          enableReinitialize
+          validationSchema={SalaryValidationSchema}
           onSubmit={async (
-            values: Partial<EmployeeFormValues>,
-            {setSubmitting}: FormikHelpers<Partial<EmployeeFormValues>>
+            values: Partial<ISalary>,
+            {setSubmitting}: FormikHelpers<Partial<ISalary>>
           ) => {
             try {
-              await updateEmployee(values as EmployeeFormValues);
+              await updateSalary(values as ISalary);
               setSubmitting(false);
-            } catch (err) {
-              console.log('error')
             } finally {
-              // navigate('.');
-              navigate('/dashboard/employee', {replace: true,});
+              navigate('/dashboard/salary', {replace: true,});
             }
           }}
         >
           {(formikProps) => (
-            <EmployeeForm formikProps={formikProps}/>
+            <SalaryForm formikProps={formikProps} employees={employees}/>
           )}
         </Formik>
       </DialogRoute>

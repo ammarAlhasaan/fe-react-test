@@ -1,27 +1,27 @@
-import {useLocation} from "react-router-dom";
-import {EmployeeForm, EmployeeFormValues, EmployeeValidationSchema} from "../../shared";
+import {useLoaderData} from "react-router-dom";
+import {SalaryForm, SalaryValidationSchema} from "pages/salary/shared";
 import {Formik} from "formik";
 import {DialogRoute} from "components/common";
+import IEmployee from "types/employee.type";
+import ISalary from "types/salary.type";
 
-export default function EmployeeDetails() {
-
-  const location = useLocation();
-  const {data} = location.state as { data: Partial<EmployeeFormValues> } || {};
-
+export default function SalaryDetails() {
+  const {salary, employees} = useLoaderData() as { salary: Partial<ISalary>, employees: IEmployee[] };
   return (
     <>
       <DialogRoute
         title="Employee Details"
       >
         <Formik
-          initialValues={data}
-          validationSchema={EmployeeValidationSchema}
+          initialValues={salary}
+          enableReinitialize
+          validationSchema={SalaryValidationSchema}
           onSubmit={() => {
             return;
           }}
         >
           {(formikProps) => (
-            <EmployeeForm formikProps={formikProps} readOnly={true}/>
+            <SalaryForm formikProps={formikProps} employees={employees} readOnly={true}/>
           )}
         </Formik>
       </DialogRoute>

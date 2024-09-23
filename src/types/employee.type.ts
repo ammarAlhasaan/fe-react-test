@@ -1,4 +1,5 @@
 export default interface IEmployee {
+  id?: string;
   staffId?: string;
   name: string;
   joiningDate: Date;

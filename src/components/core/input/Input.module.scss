@@ -1,0 +1,43 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: $spacing-md;
+}
+
+.label {
+  font-size: $font-size-sm;
+  color: var(--text-default); // Use themed color
+  margin-bottom: $spacing-sm;
+}
+
+.input {
+  padding: $spacing-sm;
+  font-size: $font-size-base;
+  border: 1px solid var(--border-default); // Use themed border color
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+
+  &:focus {
+    border-color: var(--border-focus); // Use themed focus color
+  }
+
+  &:disabled {
+    background-color: var(--background-disabled); // Use themed background color for disabled state
+    color: var(--text-disabled); // Use themed color for text in disabled state
+    cursor: not-allowed;
+  }
+}
+
+.inputError {
+  border-color: var(--border-error); // Use themed error color
+}
+
+.errorText {
+  color: var(--text-error); // Use themed error color
+  font-size: $font-size-sm;
+  margin-top: $spacing-sm;
+}

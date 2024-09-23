@@ -1,29 +1,34 @@
-import {useLocation, useParams} from "react-router-dom";
-import {EmployeeForm, EmployeeValidationSchema, EmployeeFormValues} from "../../shared";
 import {Formik, FormikHelpers} from "formik";
 import {DialogRoute} from "components/common";
+import {createEmployee} from "api/employee.api";
+import {useNavigate} from "react-router-dom";
+import {EmployeeForm, EmployeeFormValues, EmployeeValidationSchema} from "pages/employee/shared";
 
-export default function EmployeeDetails() {
-
-  const location = useLocation();
-  const {data} = location.state as { data: EmployeeFormValues } || {};
-  const {id} = useParams<"id">();
+export default function CreateEmployee() {
+  const navigate = useNavigate();
 
   return (
     <>
-      <DialogRoute>
-        <h1>Employee Details {id}</h1>
+      <DialogRoute
+        title="Add New Employee"
+      >
         <Formik
-          initialValues={data}
+          initialValues={{}}
           validationSchema={EmployeeValidationSchema}
-          onSubmit={(
-            values: EmployeeFormValues,
-            {setSubmitting}: FormikHelpers<EmployeeFormValues>
+          onSubmit={async (
+            values: Partial<EmployeeFormValues>,
+            {setSubmitting}: FormikHelpers<Partial<EmployeeFormValues>>
           ) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
+            try {
+              const randomStaffId = Math.floor(1000 + Math.random() * 9000).toString(); // Generates a random 4-digit number as a string
+              await createEmployee({
+                ...values,
+                staffId: randomStaffId,
+              } as EmployeeFormValues);
               setSubmitting(false);
-            }, 500);
+            } finally {
+              navigate('/dashboard/employee', {replace: true});
+            }
           }}
         >
           {(formikProps) => (

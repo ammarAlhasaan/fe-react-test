@@ -1,0 +1,76 @@
+{
+  "employees": [
+    {
+      "id": "0d07",
+      "name": "Ammar",
+      "joiningDate": "0033-03-12",
+      "basicSalary": 123,
+      "salaryAllowances": 123,
+      "staffId": "8378"
+    },
+    {
+      "id": "ec34",
+      "name": "Mhd",
+      "joiningDate": "2020-12-12",
+      "basicSalary": 4000,
+      "salaryAllowances": 4000,
+      "staffId": "1941"
+    }
+  ],
+  "salaries": [],
+  "paymentHistory": [
+    {
+      "id": "9f7f",
+      "deductions": 10,
+      "additions": 400,
+      "employeeId": "0d07",
+      "salaryDate": "2020-02",
+      "employeeName": "Ammar",
+      "basicSalary": 123,
+      "salaryAllowances": 123,
+      "total": 636,
+      "salaryId": null,
+      "createdAt": "2024-09-11T20:48:26.644Z"
+    },
+    {
+      "id": "f5d2",
+      "deductions": 0,
+      "additions": 0,
+      "employeeId": "ec34",
+      "salaryDate": "2022-03",
+      "employeeName": "Mhd",
+      "basicSalary": 4000,
+      "salaryAllowances": 4000,
+      "total": 8000,
+      "salaryId": null,
+      "createdAt": "2024-09-11T20:48:26.645Z"
+    },
+    {
+      "id": "f5ab",
+      "deductions": 0,
+      "additions": 5000,
+      "employeeId": "0d07",
+      "salaryDate": "2024-04",
+      "employeeName": "Ammar",
+      "basicSalary": 123,
+      "salaryAllowances": 123,
+      "total": 5246,
+      "salaryId": null,
+      "createdAt": "2024-09-11T20:48:26.645Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "ca3c",
+      "name": "Ammar",
+      "email": "ammar.rbm@gmail.com",
+      "password": "123"
+    },
+    {
+      "id": "4820",
+      "name": "Ammar",
+      "email": "uae@cashew.com",
+      "password": "Cashew@123"
+    }
+  ]
+}

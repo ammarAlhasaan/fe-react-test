@@ -1,29 +1,36 @@
-import CreateEmployee from "./create";
-import EmployeeDetails from "./details";
-import EmployeeList, {fetchEmployees} from "./list";
-import UpdateEmployee from "./update";
+import CreateSalary from "./create";
+import SalaryDetails from "./details";
+import SalaryList  from "./list";
+import UpdateSalary from "./update";
 import {RouteObject} from "react-router-dom";
+import {fetchSalaries, fetchSalary} from "pages/salary/shared/loaders";
 
 
-export const employeeRoute: RouteObject = {
-  path: "employee",
-  Component: EmployeeList,
-  loader: fetchEmployees,
+export const salaryRoute: RouteObject = {
+  path: "salary",
+  Component: SalaryList,
+  loader: fetchSalaries,
   shouldRevalidate: ({nextUrl}) => {
-    return nextUrl.pathname === "/dashboard/employee";
+    return nextUrl.pathname === "/dashboard/salary";
   },
   children: [
     {
       path: "create",
-      Component: CreateEmployee,
+      Component: CreateSalary,
     },
     {
       path: ":id",
-      Component: EmployeeDetails,
+      loader: async ({params}) => {
+        return await fetchSalary(params?.id || '')
+      },
+      Component: SalaryDetails,
     },
     {
       path: ":id/update",
-      Component: UpdateEmployee,
+      loader: async ({params}) => {
+        return await fetchSalary(params?.id || '')
+      },
+      Component: UpdateSalary,
     }
   ]
 }

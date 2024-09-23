@@ -1,9 +1,14 @@
 import {RouteObject} from "react-router-dom";
-import PaymentHistoryList from "./list";
-import {fetchPaymentHistory} from "../shared/loaders";
+import Register from "pages/auth/routes/register";
+import Login from "./login";
 
-export const paymentHistoryRoute: RouteObject = {
-  path: "payment-history",
-  Component: PaymentHistoryList,
-  loader: fetchPaymentHistory
-}
+export const authRoutes: RouteObject[] = [
+  {
+    path: 'login',
+    Component: Login, // Component to handle the login page
+  },
+  {
+    path: 'register',
+    Component: Register, // Component to handle the registration page
+  },
+];

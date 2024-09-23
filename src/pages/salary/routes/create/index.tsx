@@ -1,38 +1,44 @@
-import {EmployeeForm, EmployeeFormValues, EmployeeValidationSchema} from "../../shared";
 import {Formik, FormikHelpers} from "formik";
 import {DialogRoute} from "components/common";
-import {createEmployee} from "api/employee.api";
-import {useNavigate} from "react-router-dom";
+import {createSalary} from "api";
+import {useLocation, useNavigate} from "react-router-dom";
+import {SalaryForm, SalaryFormValues, SalaryValidationSchema} from "pages/salary/shared";
+import IEmployee from "types/employee.type";
 
-export default function CreateEmployee() {
+export default function CreateSalary() {
+  const location = useLocation();
   const navigate = useNavigate();
+  const {employees} = location.state as { employees: IEmployee[] } || {};
 
   return (
     <>
       <DialogRoute
-        title="Add New Employee"
+        title="Add Salary"
       >
         <Formik
-          initialValues={{}}
-          validationSchema={EmployeeValidationSchema}
+          enableReinitialize
+          initialValues={{
+            basicSalary: 0,
+            salaryAllowances: 0,
+            deductions: 0,
+            additions: 0
+          }}
+          validationSchema={SalaryValidationSchema}
           onSubmit={async (
-            values: Partial<EmployeeFormValues>,
-            {setSubmitting}: FormikHelpers<Partial<EmployeeFormValues>>
+            values: Partial<SalaryFormValues>,
+            {setSubmitting}: FormikHelpers<Partial<SalaryFormValues>>
           ) => {
             try {
-              const randomStaffId = Math.floor(1000 + Math.random() * 9000).toString(); // Generates a random 4-digit number as a string
-              await createEmployee({
-                ...values,
-                staffId: randomStaffId,
-              } as EmployeeFormValues);
+              const { salaryAllowances, basicSalary, ...restValues } = values;
+              await createSalary(restValues as SalaryFormValues);
               setSubmitting(false);
             } finally {
-              navigate('/dashboard/employee', {replace: true});
+              navigate('/dashboard/salary', {replace: true});
             }
           }}
         >
           {(formikProps) => (
-            <EmployeeForm formikProps={formikProps}/>
+            <SalaryForm formikProps={formikProps} employees={employees}/>
           )}
         </Formik>
       </DialogRoute>
